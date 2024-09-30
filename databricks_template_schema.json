@@ -1,0 +1,30 @@
+{
+  "properties": {
+    "project_name": {
+      "type": "string",
+      "description": "Project name (use dashes)",
+      "order": 1
+    },
+    "package_name": {
+      "type": "string",
+      "description": "Package name (use underscores)",
+      "order": 2
+    },
+    "author": {
+      "type": "string",
+      "description": "Author",
+      "order": 3
+    },
+    "email": {
+      "type": "string",
+      "description": "Email of author",
+      "order": 4
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the project",
+      "order": 5
+    }
+  },
+  "success_message": "\nYour new project has been created in the '{{.project_name}}' directory."
+}

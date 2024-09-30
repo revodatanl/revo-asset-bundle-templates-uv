@@ -1,0 +1,78 @@
+.PHONY: install setup clean test repo tree docs
+
+install:
+	@echo "Verifying if Homebrew is installed..."
+	@which brew > /dev/null || (echo "Homebrew is not installed. Installing Homebrew..." && /bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)")
+
+	@for tool in git uv; do \
+		if ! command -v $$tool >/dev/null 2>&1; then \
+			echo "Installing $$tool..."; \
+			brew install $$tool; \
+		else \
+			echo "$$tool is already installed. Skipping."; \
+		fi; \
+	done
+
+	@echo "Setting up Python version $$PYTHON_VERSION"; \
+	uv python install;
+
+	@echo "All tools installed successfully."
+
+setup:
+	@echo "Setting up the project..."
+	uv sync;
+
+	@if [ ! -d ".git" ]; then \
+		echo "Setting up git..."; \
+		git init -b main > /dev/null; \
+	fi
+
+	@echo "Setting up pre-commit..."
+	. .venv/bin/activate;
+	.venv/bin/pre-commit install --hook-type pre-commit --hook-type commit-msg;
+
+clean:
+	@echo "Cleaning up..."
+	rm -rf .venv uv.lock
+	find . -type d \( -name ".pytest_cache" -o -name ".mypy_cache" -o -name ".ruff_cache" \) -exec rm -rf {} +
+	@echo "Cleanup completed. Resetting terminal..."
+	@reset
+
+test:
+	@echo "Running tests..."
+	.venv/bin/pre-commit run --all-files
+	uv sync;
+	uv run pytest tests --cov=src --cov-report term;
+
+# Create a repository in RevoData's GitHub, and adds a remote to the local git repo
+repo:
+	@printf "Creating repository in RevoData's GitHub...\n"
+	@PROJECT_NAME=$$(grep 'name =' pyproject.toml | awk -F'"' '{print $$2}'); \
+	REPO_DESCRIPTION=$$(grep 'description =' pyproject.toml | awk -F'"' '{print $$2}'); \
+	if ! gh auth status >/dev/null 2>&1; then \
+		echo "Error: GitHub CLI is not authenticated. Please run 'gh auth login' first."; \
+		exit 1; \
+	fi; \
+	if ! gh repo view revodatanl/$$PROJECT_NAME > /dev/null 2>&1; then \
+		gh repo create revodatanl/$$PROJECT_NAME -y --private -d "$$REPO_DESCRIPTION" > /dev/null 2>&1; \
+		(git remote | grep origin || git remote add origin git@github.com:revodatanl/$$PROJECT_NAME.git) > /dev/null 2>&1; \
+		printf "Repository created at revodatanl/$$PROJECT_NAME...\n"; \
+		printf "Publishing project...\n"; \
+		printf "Repository published.\n"; \
+	else \
+		printf "Repository revodatanl/$$PROJECT_NAME already exists.\n"; \
+	fi
+
+tree:
+	@echo "Generating project tree..."
+	@tree -I '.venv|__pycache__|archive|scratch|.databricks|.ruff_cache|.mypy_cache|.pytest_cache|.git|htmlcov|site|dist|.DS_Store|fixtures' -a
+
+docs:
+	@echo "Generating HTML documentation..."
+	@uv run pdoc --html src/{{.package_name}} -o docs/api --force
+	@uv run pdoc --html tests -o docs/api --force
+	@echo "Generating coverage report..."
+	@uv run pytest tests -v --cov=src --cov-report html:docs/tests/coverage
+	@rm -rf docs/tests/coverage/.gitignore
+	@uv run mkdocs build
+	@uv run mkdocs serve
