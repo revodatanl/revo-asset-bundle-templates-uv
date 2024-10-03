@@ -318,8 +318,6 @@ make tree
 │   ├── pull_request_template.md
 │   └── workflows
 │       ├── ci.yml
-│       ├── deploy-dab.yml
-│       ├── semantic-pr.yml
 │       └── semantic-release.yml
 ├── .gitignore
 ├── .pre-commit-config.yaml
@@ -329,15 +327,13 @@ make tree
 │   └── settings.json
 ├── Makefile
 ├── README.md
-├── README_github.md
-├── databricks.yml
-├── dependabot.md
 ├── docs
 │   ├── CHANGELOG.md
 │   ├── api
 │   │   ├── {{.package_name}}
 │   │   │   ├── index.html
-│   │   │   └── main.html
+│   │   │   ├── main.html
+│   │   │   └── tools.html
 │   │   └── tests
 │   │       ├── default_test.html
 │   │       └── index.html
@@ -345,64 +341,35 @@ make tree
 │   │   ├── badge-coverage.svg
 │   │   ├── badge-tests.svg
 │   │   ├── make-clean.png
-│   │   ├── make-deploy_dev.png
-│   │   ├── make-destroy_dev.png
 │   │   ├── make-install.png
-│   │   ├── make-module-azure-devops.png
-│   │   ├── make-module-dlt.png
-│   │   ├── make-module-gitlab.png
-│   │   ├── make-module-vscode.png
-│   │   ├── make-module.png
-│   │   ├── make-repo-github.png
-│   │   ├── make-repo.png
 │   │   ├── make-setup.png
 │   │   ├── make-test.png
 │   │   └── make-tree.png
-│   ├── bundle_deployment.md
 │   ├── cicd.md
 │   ├── coding_standards.md
 │   ├── commands.md
 │   ├── getting_started.md
 │   ├── index.md
-│   ├── jobs
-│   │   └── index.md
-│   ├── modules.md
-│   ├── notebooks
-│   │   └── index.md
 │   ├── release.md
+│   ├── {{.package_name}}.md
 │   └── tests
 │       ├── coverage
-│       │   ├── class_index.html
-│       │   ├── coverage_html_cb_6fb7b396.js
-│       │   ├── favicon_32_cb_58284776.png
-│       │   ├── function_index.html
-│       │   ├── index.html
-│       │   ├── keybd_closed_cb_ce680311.png
-│       │   ├── status.json
-│       │   ├── style_cb_8e611ae1.css
-│       │   ├── z_df71c8327dd0b782___init___py.html
-│       │   └── z_df71c8327dd0b782_main_py.html
+│       │   └── ...
 │       ├── coverage_report.md
 │       ├── test_configuration.md
 │       └── tests.md
 ├── mkdocs.yml
-├── poetry.lock
-├── poetry.toml
 ├── pyproject.toml
-├── resources
-│   ├── jobs
-│   │   ├── ingest_dataset_using_dlt.yml
-│   │   └── template_job.yml
-│   └── notebooks
-│       ├── dlt_ingest_dataset.py
-│       └── hello_revodata.py
+├── release.config.js
 ├── src
-│   └──
+│   └── {{.package_name}}
 │       ├── __init__.py
-│       └── main.py
-└── tests
-    ├── __init__.py
-    └── default_test.py
+│       ├── main.py
+│       └── tools.py
+├── tests
+│   ├── __init__.py
+│   └── default_test.py
+└── uv.lock
 
 19 directories, 73 files
 ```
