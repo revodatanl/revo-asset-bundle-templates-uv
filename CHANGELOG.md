@@ -2,11 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.0.0] - 2024-10-03
+## [0.2.1] - 2024-10-03
+
+### 🐛 Bug Fixes
+
+- Update automated CHANGELOG generation configuration
+
+## [0.2.0] - 2024-10-03
 
 ### 🚀 Features
 
-- Initial commit
 - Add timeout to env var for uv sync
 - Add ubuntu22.04 support for uv to makefile template
 
