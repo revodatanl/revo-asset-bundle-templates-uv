@@ -8,7 +8,7 @@ on:
 
 jobs:
   release:
-    runs-on: ubuntu-laest
+    runs-on: ubuntu-latest
     permissions:
       contents: write
       issues: write
@@ -45,7 +45,7 @@ jobs:
             @semantic-release/exec \
             @semantic-release/git \
             @semantic-release/github
-            
+
       # Step 5: Run Semantic Release
       - name: Run Semantic Release
         run: npx semantic-release
