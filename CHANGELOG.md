@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.3] - 2024-10-07
+
+### 🐛 Bug Fixes
+
+- *(semantic-release)* Update semantic release runnner in template
+
 ## [0.2.2] - 2024-10-03
 
 ### 🐛 Bug Fixes
