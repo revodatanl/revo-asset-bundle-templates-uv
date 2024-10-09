@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### ⚙️ Miscellaneous Tasks
+
+- *(docs)* Update ubuntu badge in README
+
 ## [0.2.3] - 2024-10-07
 
 ### 🐛 Bug Fixes
